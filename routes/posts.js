@@ -1,4 +1,4 @@
-import { getAllPosts } from "../controllers/posts.js";
+import { getAllPosts, getPost } from "../controllers/posts.js";
 import { postSchema } from "../schemas/postSchema.js";
 
 const postRoutes = async (fastify, options, done) => {
@@ -14,7 +14,18 @@ const postRoutes = async (fastify, options, done) => {
     handler: getAllPosts,
   };
 
+  const getPostOption = {
+    schema: {
+      response: {
+        200: postSchema,
+      },
+    },
+    handler: getPost,
+  };
+
   fastify.get("/", getAllPostsOption);
+
+  fastify.get("/:id", getPostOption);
 
   done();
 };
