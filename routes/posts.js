@@ -24,11 +24,20 @@ const postRoutes = async (fastify, options, done) => {
   };
 
   const addPostOption = {
-    body: postSchema,    
     schema: {
+      body: postSchema,
+      response: {
+        200: {
+          type: "object",
+          properties: {
+            affectedRows: { type: "number" },
+            insertId: { type: "number" },
+          }
+        }
+      }
     },
     handler: addPost,
-  }
+  } 
 
   fastify.get("/", getAllPostsOption);
 
