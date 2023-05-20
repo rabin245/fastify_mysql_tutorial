@@ -15,4 +15,11 @@ export const getPost = async (req, reply) => {
 export const addPost = async (req, reply) => {
   const conn = await req.server.mysql.getConnection();
   const response = await postService.addPost(conn, req.body);
+  return response;
+}
+
+export const deletePost = async (req, reply) => {
+  const conn = await req.server.mysql.getConnection();
+  const response = await postService.deletePost(conn, req.params.id);
+  return response;
 }

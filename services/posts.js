@@ -11,10 +11,19 @@ export const getPost = async (conn, id) => {
 };
 
 export const addPost = async (conn, post) => {
-  const [rows] = await conn.query(
+  const [response] = await conn.query(
     "INSERT INTO posts (title, content) VALUES (?, ?)",
     [post.title, post.content]
   );
 
-  return rows;
+  return response;
+}
+
+export const deletePost = async (conn, id) => {
+  const [response] = await conn.query(
+    "DELETE FROM posts WHERE id = ?",
+    [id]
+  );
+
+  return response;
 }

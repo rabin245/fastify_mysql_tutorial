@@ -1,4 +1,4 @@
-import { getAllPosts, getPost, addPost } from "../controllers/posts.js";
+import { getAllPosts, getPost, addPost, deletePost } from "../controllers/posts.js";
 import { postSchema } from "../schemas/postSchema.js";
 
 const postRoutes = async (fastify, options, done) => {
@@ -39,11 +39,33 @@ const postRoutes = async (fastify, options, done) => {
     handler: addPost,
   } 
 
+  const deletePostOption = {
+    schema: {
+      params: {
+        type: "object",
+        properties: {
+          id: {type: "number"},
+        }
+      },
+      response: {
+        200:{
+          type: "object",
+          properties: {
+            affectedRows: { type: "number" },
+          }
+        }
+      }
+    },
+    handler: deletePost,
+  }
+
   fastify.get("/", getAllPostsOption);
 
   fastify.get("/:id", getPostOption);
 
   fastify.post("/", addPostOption);
+
+  fastify.delete('/:id', deletePostOption);
 
   done();
 };
