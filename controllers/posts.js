@@ -11,3 +11,8 @@ export const getPost = async (req, reply) => {
   const post = await postService.getPost(conn, req.params.id);
   return post;
 };
+
+export const addPost = async (req, reply) => {
+  const conn = await req.server.mysql.getConnection();
+  const response = await postService.addPost(conn, req.body);
+}
