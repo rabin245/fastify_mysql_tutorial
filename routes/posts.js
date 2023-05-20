@@ -16,6 +16,12 @@ const postRoutes = async (fastify, options, done) => {
 
   const getPostOption = {
     schema: {
+      params: {
+        type: "object",
+        properties: {
+          id: {type: "number"}
+        }
+      },
       response: {
         200: postSchema,
       },
