@@ -1,6 +1,8 @@
 import Fastify from "fastify";
 import postRoutes from "./routes/posts.js";
 import dbConnector from "./plugins/db.js";
+import authRoutes from "./routes/auth.js";
+import jwtPlugin from "./plugins/jwt.js";
 
 const fastify = Fastify({
   logger: true,
@@ -8,7 +10,11 @@ const fastify = Fastify({
 
 fastify.register(dbConnector);
 
+fastify.register(jwtPlugin);
+
 fastify.register(postRoutes, { prefix: "/api/posts" });
+
+fastify.register(authRoutes, { prefix: "/api/auth"});
 
 fastify.get("/", async (req, reply) => {
   return { hello: "world" };
