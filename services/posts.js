@@ -1,29 +1,45 @@
 export const getAllPosts = async (conn) => {
-  const [rows] = await conn.query("SELECT * FROM posts");
+  try {
+    const [rows] = await conn.query("SELECT * FROM posts");
 
-  return rows;
+    return rows;
+  } catch (error) {
+    throw error;  
+  }
 };
 
 export const getPost = async (conn, id) => {
-  const [rows] = await conn.query("SELECT * FROM posts WHERE id = ?", [id]);
+  try {
+    const [rows] = await conn.query("SELECT * FROM posts WHERE id = ?", [id]);
 
-  return rows[0];
+    return rows[0];
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const addPost = async (conn, post) => {
-  const [response] = await conn.query(
-    "INSERT INTO posts (title, content) VALUES (?, ?)",
-    [post.title, post.content]
-  );
+  try {
+    const [response] = await conn.query(
+      "INSERT INTO posts (title, content) VALUES (?, ?)",
+      [post.title, post.content]
+    );
 
-  return response;
+    return response;
+  } catch (error) {
+    throw error;
+  }
 }
 
 export const deletePost = async (conn, id) => {
-  const [response] = await conn.query(
-    "DELETE FROM posts WHERE id = ?",
-    [id]
-  );
+  try {
+    const [response] = await conn.query(
+      "DELETE FROM posts WHERE id = ?",
+      [id]
+    );
 
-  return response;
+    return response;
+  } catch (error) {
+    throw error;
+  }
 }
