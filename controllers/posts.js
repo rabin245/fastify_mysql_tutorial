@@ -1,6 +1,10 @@
 import * as postService from "../services/posts.js";
 
 export const getAllPosts = async (req, reply) => {
+  console.log("\n reading headers")
+  console.log(req.headers);
+  console.log("\n reading headers")
+
   const conn = await req.server.mysql.getConnection();
   const posts = await postService.getAllPosts(conn);
   return posts;

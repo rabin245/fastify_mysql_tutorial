@@ -26,6 +26,7 @@ const postRoutes = async (fastify, options, done) => {
         200: postSchema,
       },
     },
+    onRequest: fastify.authenticate, 
     handler: getPost,
   };
 
@@ -42,6 +43,7 @@ const postRoutes = async (fastify, options, done) => {
         }
       }
     },
+    onRequest: fastify.authenticate, 
     handler: addPost,
   } 
 
@@ -62,6 +64,7 @@ const postRoutes = async (fastify, options, done) => {
         }
       }
     },
+    onRequest: fastify.authenticate, 
     handler: deletePost,
   }
 
