@@ -34,17 +34,24 @@ export const login = async (req, reply) => {
     const conn = await req.server.mysql.getConnection();
     const response = await authService.login(conn, req.body);
 
-    const token = await req.server.jwt.sign({
+    const authToken = await req.server.jwt.sign({
       username: response.username,
     });
-    console.log(token);
 
-    // set auth header
-    reply.header("Authorization", `Bearer ${token}`);
 
-    // reply.header("set-cookie", "token=" + token + "; Path=/; HttpOnly;");
+    const refreshToken = await reply.jwtSign({
+      username: response.username,
+    }, {expiresIn: '30s'});
 
-    return { token };
+    // set refresh token in cookie
+    reply.setCookie('refreshToken', refreshToken, {
+      path: '/',
+      domain: 'localhost',
+      httpOnly: true,
+      maxAge: 30 * 1000,
+    })
+
+    return { authToken };
   } catch (error) {
     if (error.message === 'User does not exist') {
       reply.code(404).send({ error: 'User does not exist' });

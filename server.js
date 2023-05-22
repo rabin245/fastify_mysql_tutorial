@@ -3,6 +3,7 @@ import postRoutes from "./routes/posts.js";
 import dbConnector from "./plugins/db.js";
 import authRoutes from "./routes/auth.js";
 import jwtPlugin from "./plugins/jwt.js";
+import cookie from '@fastify/cookie';
 
 const fastify = Fastify({
   logger: true,
@@ -11,6 +12,8 @@ const fastify = Fastify({
 fastify.register(dbConnector);
 
 fastify.register(jwtPlugin);
+
+fastify.register(cookie);
 
 fastify.register(postRoutes, { prefix: "/api/posts" });
 
